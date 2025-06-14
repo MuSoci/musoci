@@ -99,7 +99,7 @@ export class MainHero extends BaseComponent {
         }
       </style>
       <section class="hero" id="home">
-        <video autoplay loop muted playsinline src="media/vid/hero-vid.mp4"></video>
+        <video autoplay preload loop muted playsinline src="media/vid/hero-vid.mp4"></video>
         <div class="hero-content">
           <div>
             <a class="brand-logo" href="/">
@@ -115,6 +115,29 @@ export class MainHero extends BaseComponent {
         <div class="gradient-overlay"></div>
       </section>
     `;
+  }
+
+  connectedCallback() {
+    super.connectedCallback(); 
+    this.parallaxScrollListener = () => {
+      const overlay = this.shadowRoot.querySelector('.gradient-overlay');
+      if (overlay) {
+        const scrolled = window.pageYOffset;
+        // Check if the component is still in the DOM and visible if performance is an issue.
+        // For simplicity, direct manipulation is used here.
+        overlay.style.transform = `rotate(${scrolled * 0.2}deg) scale(${1 + scrolled * 0.0005})`;
+      }
+    };
+    window.addEventListener('scroll', this.parallaxScrollListener);
+  }
+
+  disconnectedCallback() {
+    // Call super.disconnectedCallback() if BaseComponent has one.
+    // super.disconnectedCallback();
+    window.removeEventListener('scroll', this.parallaxScrollListener);
+    if (this.parallaxScrollListener) {
+      delete this.parallaxScrollListener; // Clean up the reference
+    }
   }
 }
 
