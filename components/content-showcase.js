@@ -71,10 +71,13 @@ export class ContentShowcase extends BaseComponent {
                 :host {
                     display: block;
                     width: 100%;
+                    border-bottom: 1px solid #fff;
+                    border-top: 1px solid #fff;
                 }
                 .carousel-container {
                     overflow: hidden;
                     padding: 0 1rem;
+                    padding-bottom: 2rem;
                     width: 100%;
                     box-sizing: border-box;
                 }
@@ -91,18 +94,18 @@ export class ContentShowcase extends BaseComponent {
                     width: 100%;
                 }
 
-                @media (min-width: 768px) {
+                @media (min-width: 984px) {
                     .content-carousel {
                         grid-auto-flow: column;
                         grid-auto-columns: calc((100% - 4rem) / 3);
                         animation: scrollLeft 30s linear infinite;
                     }
                     .carousel-container {
-                        padding: 0 2rem;
+                        padding: 2rem;
                     }
                 }
 
-                @media (max-width: 767px) {
+                @media (max-width: 983px) {
                     .carousel-container {
                         padding: 0;
                         max-width: 100vw;
@@ -154,7 +157,7 @@ export class ContentShowcase extends BaseComponent {
 
     setupCarousel() {
         const carousel = this.shadowRoot.querySelector('.content-carousel');
-        const isMobile = window.innerWidth < 768;
+        const isMobile = window.innerWidth < 984;
         let currentIndex = 0;
 
         const scroll = () => {
@@ -166,7 +169,7 @@ export class ContentShowcase extends BaseComponent {
         };
 
         window.addEventListener('resize', () => {
-            const newIsMobile = window.innerWidth < 768;
+            const newIsMobile = window.innerWidth < 984;
             if (newIsMobile !== isMobile) {
                 location.reload();
             }
